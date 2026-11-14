@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVA Catalog — Browse All Products</title>
+  <link rel="icon" href="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=32&h=32&q=80">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <span class="badge">PROMO CODE</span>
+    <span>Use code <strong>NOVA20</strong> at checkout for 20% discount on all catalog items!</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+        <span>NOVA<span class="brand-dot">.</span></span>
+      </a>
+
+      <!-- Deliver To Location Pill -->
+      <div class="delivery-pill" title="Click to update delivery address">
+        <i class="fa-solid fa-location-dot"></i>
+        <div class="text-col">
+          <span class="label">Deliver to</span>
+          <span class="address-val" id="header-address-text">Select location</span>
+        </div>
+      </div>
+
+      <!-- Search Wrapper -->
+      <div class="search-wrapper">
+        <div class="search-box">
+          <select class="search-category-select" id="header-category-select" aria-label="Select Category">
+            <option value="all">All</option>
+            <option value="mobiles">Phones</option>
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
+            <option value="headphones">Audio</option>
+            <option value="kitchen">Kitchen</option>
+            <option value="ebooks">Books</option>
+          </select>
+          <input type="text" class="search-input" id="header-search-input" placeholder="Search catalog..." autocomplete="off">
+          <button class="search-btn" id="header-search-btn" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+        <div class="search-suggestions-dropdown" id="search-suggestions-dropdown"></div>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <button class="action-btn" id="theme-toggle-btn" aria-label="Toggle dark/light mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <button class="action-btn" onclick="window.location.href='category.html?view=wishlist'" title="Your Wishlist" aria-label="Wishlist">
+          <i class="fa-regular fa-heart"></i>
+          <span class="action-badge wishlist-count-badge">0</span>
+        </button>
+
+        <div class="user-account-btn" onclick="window.location.href='orders.html'" title="My Orders">
+          <div class="user-avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+          <span>Orders</span>
+        </div>
+
+        <button class="cart-trigger-btn" onclick="openCartDrawer()" aria-label="View Cart">
+          <div class="cart-icon-circle"><i class="fa-solid fa-bag-shopping"></i></div>
+          <span class="cart-btn-label">Cart</span>
+          <span class="cart-count-badge" style="background:#fff; color:var(--primary); font-size:0.75rem; padding:2px 7px; border-radius:12px;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="category-nav-bar">
+    <div class="container">
+      <ul class="category-nav-list">
+        <li><a href="index.html" class="category-nav-link"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="category.html?category=all" class="category-nav-link active"><i class="fa-solid fa-shapes"></i> All Catalog</a></li>
+        <li><a href="category.html?category=mobiles" class="category-nav-link"><i class="fa-solid fa-mobile-screen"></i> Smartphones</a></li>
+        <li><a href="category.html?category=electronics" class="category-nav-link"><i class="fa-solid fa-laptop"></i> Laptops & Tech</a></li>
+        <li><a href="category.html?category=fashion" class="category-nav-link"><i class="fa-solid fa-shirt"></i> Fashion & Shoes</a></li>
+        <li><a href="category.html?category=headphones" class="category-nav-link"><i class="fa-solid fa-headphones"></i> Audio & Sound</a></li>
+        <li><a href="category.html?category=kitchen" class="category-nav-link"><i class="fa-solid fa-utensils"></i> Kitchen</a></li>
+        <li><a href="category.html?category=ebooks" class="category-nav-link"><i class="fa-solid fa-book-open"></i> Books</a></li>
+        <li><a href="index.html#flash-deals" class="category-nav-link deals-pill"><i class="fa-solid fa-bolt"></i> Flash Deals</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Catalog Layout with Sidebar Filters -->
+  <main class="container">
+    <div class="catalog-layout">
+      <!-- Left Filter Sidebar -->
+      <aside class="catalog-sidebar">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h3 style="font-family:var(--font-heading); font-size:1.15rem; font-weight:800;">Filters</h3>
+          <button id="reset-filters-btn" style="border:none; background:transparent; color:var(--primary); font-weight:700; font-size:0.8rem; cursor:pointer;">Reset</button>
+        </div>
+
+        <!-- Category Checkboxes -->
+        <div class="sidebar-filter-section">
+          <div class="filter-group-title">Categories</div>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" name="cat-filter" value="mobiles">
+            <span>Smartphones</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" name="cat-filter" value="electronics">
+            <span>Electronics & TV</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" name="cat-filter" value="fashion">
+            <span>Fashion & Footwear</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" name="cat-filter" value="headphones">
+            <span>Audio & Headphones</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" name="cat-filter" value="kitchen">
+            <span>Kitchen & Home</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" name="cat-filter" value="ebooks">
+            <span>Books & Best Sellers</span>
+          </label>
+        </div>
+
+        <!-- Price Range Slider -->
+        <div class="sidebar-filter-section">
+          <div class="filter-group-title">Maximum Price</div>
+          <input type="range" id="price-slider" class="price-range-slider" min="500" max="150000" step="500" value="150000">
+          <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:700; color:var(--text-muted);">
+            <span>₹500</span>
+            <span id="price-slider-display" style="color:var(--primary); font-weight:800;">₹1,50,000</span>
+          </div>
+        </div>
+
+        <!-- Customer Rating Filter -->
+        <div class="sidebar-filter-section">
+          <div class="filter-group-title">Customer Rating</div>
+          <label class="filter-checkbox-label">
+            <input type="radio" name="rating-filter" value="4.8">
+            <span style="color:#f59e0b;"><i class="fa-solid fa-star"></i> 4.8 & Above</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="radio" name="rating-filter" value="4.5">
+            <span style="color:#f59e0b;"><i class="fa-solid fa-star"></i> 4.5 & Above</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="radio" name="rating-filter" value="0" checked>
+            <span>All Ratings</span>
+          </label>
+        </div>
+
+        <!-- Discount Filter -->
+        <div class="sidebar-filter-section">
+          <div class="filter-group-title">Offers & Deals</div>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" id="only-deals-toggle">
+            <span style="color:var(--accent-pink); font-weight:700;">On Sale Only (% Off)</span>
+          </label>
+        </div>
+      </aside>
+
+      <!-- Right Catalog Area -->
+      <section class="catalog-content">
+        <!-- Breadcrumbs & Heading -->
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+          <div>
+            <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:4px;">
+              <a href="index.html">Home</a> &gt; <span id="breadcrumb-current">Catalog</span>
+            </div>
+            <h1 style="font-family:var(--font-heading); font-size:1.9rem; font-weight:800;" id="catalog-heading">
+              All Products
+            </h1>
+          </div>
+          <span id="catalog-count-label" style="font-size:0.88rem; font-weight:700; color:var(--text-muted);">
+            Showing results
+          </span>
+        </div>
+
+        <!-- Active Filter Tags -->
+        <div id="active-filter-tags-row" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;"></div>
+
+        <!-- Sort Toolbar -->
+        <div class="toolbar-wrap">
+          <div style="font-size:0.86rem; color:var(--text-muted); font-weight:600;">
+            Curated premium products direct with verified warranties
+          </div>
+          <div class="sort-select-box">
+            <label for="catalog-sort"><i class="fa-solid fa-arrow-down-short-wide"></i> Sort:</label>
+            <select id="catalog-sort" class="sort-select">
+              <option value="featured">Featured First</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="rating">Highest Rated</option>
+              <option value="discount">Biggest Savings</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Products Grid Container -->
+        <div class="products-grid" id="category-products-grid">
+          <!-- Populated by category.js -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Luxury Modern Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-main-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+            <span>NOVA<span class="brand-dot">.</span></span>
+          </a>
+          <p class="footer-desc">
+            Redefining digital retail with premium technology, authentic streetwear, and high performance everyday lifestyle essentials.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Categories</h4>
+          <ul>
+            <li><a href="category.html?category=mobiles">Smartphones</a></li>
+            <li><a href="category.html?category=electronics">Laptops & Workstations</a></li>
+            <li><a href="category.html?category=fashion">Sneakers & Fashion</a></li>
+            <li><a href="category.html?category=headphones">Audio & Headphones</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Help</h4>
+          <ul>
+            <li><a href="orders.html">Track Order</a></li>
+            <li><a href="contact.html">Customer Care Hub</a></li>
+            <li><a href="signin.html">Account & Lists</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Exclusive Perks</h4>
+          <p style="font-size:0.85rem; color:#94a3b8; margin-bottom: 12px;">Instant ₹500 voucher on your next order with code <strong>NOVA20</strong>.</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <div>&copy; 2026 NOVA Commerce. All rights reserved.</div>
+        <div class="footer-payment-badges">
+          <i class="fa-brands fa-cc-visa"></i>
+          <i class="fa-brands fa-cc-mastercard"></i>
+          <i class="fa-brands fa-cc-apple-pay"></i>
+          <i class="fa-brands fa-google-pay"></i>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODALS & OFF-CANVAS
+       ========================================================================== -->
+  <!-- Cart Drawer -->
+  <div class="cart-drawer-overlay" id="cart-drawer-overlay" onclick="closeCartDrawer()"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-head">
+      <div class="cart-drawer-title-group">
+        <h3>Shopping Bag</h3>
+        <span class="cart-drawer-count" id="cart-drawer-count">0 items</span>
+      </div>
+      <button class="btn-close-drawer" onclick="closeCartDrawer()" aria-label="Close Cart"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-free-shipping-bar">
+      <div class="free-shipping-text" id="shipping-progress-text">
+        <span>Add ₹999 for FREE Express Shipping</span>
+        <span>0%</span>
+      </div>
+      <div class="shipping-progress-track">
+        <div class="shipping-progress-fill" id="shipping-progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+    <div class="cart-drawer-body" id="cart-drawer-body"></div>
+    <div class="cart-drawer-foot" id="cart-drawer-foot"></div>
+  </aside>
+
+  <!-- Quick View Modal -->
+  <div class="modal-overlay" id="quickview-modal-overlay" onclick="if(event.target===this) closeQuickView()">
+    <div class="quickview-card" id="quickview-modal-content"></div>
+  </div>
+
+  <!-- Multi-Step Checkout Modal -->
+  <div class="modal-overlay" id="checkout-modal-overlay" onclick="if(event.target===this) closeCheckoutModal()">
+    <div class="checkout-modal-card">
+      <button class="modal-close-btn" onclick="closeCheckoutModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h2 style="font-family:var(--font-heading); font-size:1.4rem; font-weight:800; margin-bottom:18px;">
+        Express Checkout
+      </h2>
+      <form id="checkout-form">
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label" for="checkout-name">Full Name *</label>
+            <input type="text" id="checkout-name" class="form-input" placeholder="e.g. John Doe" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="checkout-phone">Phone Number *</label>
+            <input type="tel" id="checkout-phone" class="form-input" placeholder="e.g. 9876543210" required>
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label" for="checkout-pincode">Pincode *</label>
+            <input type="text" id="checkout-pincode" class="form-input" placeholder="e.g. 110001" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="checkout-city">Town / City *</label>
+            <input type="text" id="checkout-city" class="form-input" placeholder="e.g. Mumbai" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="checkout-flat">Flat, House no., Building *</label>
+          <input type="text" id="checkout-flat" class="form-input" placeholder="e.g. Flat 402" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="checkout-area">Area, Street, Landmark *</label>
+          <input type="text" id="checkout-area" class="form-input" placeholder="e.g. Linking Road" required>
+        </div>
+        <div style="background:var(--bg-subtle); padding:14px; border-radius:var(--radius-md); margin-bottom:18px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-weight:600; font-size:0.9rem;">Order Total:</span>
+          <strong id="checkout-order-total" style="font-size:1.3rem; font-family:var(--font-heading); color:var(--primary);">₹0</strong>
+        </div>
+        <button type="submit" id="submit-order-btn" class="btn-primary" style="width:100%; justify-content:center; padding:14px;">
+          <i class="fa-solid fa-lock"></i> Place Order Now
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Order Success Modal -->
+  <div class="modal-overlay" id="order-success-modal-overlay">
+    <div class="order-success-card">
+      <div class="success-check-circle"><i class="fa-solid fa-check"></i></div>
+      <h2 style="font-family:var(--font-heading); font-size:1.6rem; font-weight:800;">Order Confirmed!</h2>
+      <div class="order-id-badge" id="success-order-id">#NV-892144</div>
+      <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6; margin-bottom:24px;" id="success-order-details">
+        Your package is being prepared with priority express handling.
+      </p>
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <button class="btn-primary" onclick="closeOrderSuccessModal(); window.location.href='orders.html';">
+          <i class="fa-solid fa-box"></i> View Orders
+        </button>
+        <button class="btn-secondary" style="color:var(--text-main); border-color:var(--border-color);" onclick="closeOrderSuccessModal();">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="products.js"></script>
+  <script src="javascript.js"></script>
+  <script src="category.js"></script>
+</body>
+</html>

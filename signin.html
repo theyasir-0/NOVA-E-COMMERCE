@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVA — Sign In / Create Account</title>
+  <link rel="icon" href="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=32&h=32&q=80">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+<body style="min-height: 100vh; display: flex; flex-direction: column;">
+
+  <!-- Simple Header -->
+  <header style="padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); background: var(--bg-surface);">
+    <a href="index.html" class="brand">
+      <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+      <span>NOVA<span class="brand-dot">.</span></span>
+    </a>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <button class="action-btn" id="theme-toggle-btn" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+      <a href="index.html" class="btn-secondary" style="color: var(--text-main); border-color: var(--border-color); padding: 8px 16px; font-size: 0.82rem;">
+        Back to Store
+      </a>
+    </div>
+  </header>
+
+  <!-- Auth Container -->
+  <div class="auth-page-container" style="flex: 1;">
+    <div class="auth-glass-card">
+      <!-- Auth Switcher Tabs -->
+      <div class="auth-nav-tabs">
+        <button class="auth-tab-btn active" id="tab-signin-btn">Sign In</button>
+        <button class="auth-tab-btn" id="tab-signup-btn">Create Account</button>
+      </div>
+
+      <!-- Social Logins -->
+      <div class="social-login-grid">
+        <button class="social-btn" onclick="mockSocialLogin('Google')">
+          <i class="fa-brands fa-google" style="color:#ea4335;"></i> Google
+        </button>
+        <button class="social-btn" onclick="mockSocialLogin('Apple')">
+          <i class="fa-brands fa-apple"></i> Apple
+        </button>
+      </div>
+
+      <div class="divider-with-text">
+        <span>or continue with email</span>
+      </div>
+
+      <!-- Sign In Form -->
+      <form id="signin-form" onsubmit="handleAuthSubmit(event, 'signin')">
+        <div class="form-group">
+          <label class="form-label" for="auth-email">Email or Mobile Number</label>
+          <input type="text" id="auth-email" class="form-input" placeholder="name@example.com" required>
+        </div>
+
+        <div class="form-group" style="position: relative;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <label class="form-label" for="auth-password" style="margin-bottom:0;">Password</label>
+            <a href="#" style="font-size:0.75rem; color:var(--primary); font-weight:700;">Forgot?</a>
+          </div>
+          <input type="password" id="auth-password" class="form-input" placeholder="••••••••" required style="padding-right: 40px;">
+          <button type="button" onclick="togglePasswordVisibility('auth-password', this)" style="position:absolute; right:12px; bottom:10px; border:none; background:transparent; color:var(--text-subtle); cursor:pointer;">
+            <i class="fa-regular fa-eye"></i>
+          </button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+          <input type="checkbox" id="remember-me" checked style="accent-color: var(--primary);">
+          <label for="remember-me" style="font-size: 0.82rem; color: var(--text-muted); cursor: pointer;">Keep me signed in on this device</label>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 12px;">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to NOVA
+        </button>
+      </form>
+
+      <!-- Sign Up Form (Initially hidden) -->
+      <form id="signup-form" style="display: none;" onsubmit="handleAuthSubmit(event, 'signup')">
+        <div class="form-group">
+          <label class="form-label" for="signup-name">Full Name</label>
+          <input type="text" id="signup-name" class="form-input" placeholder="e.g. Alex Rivera" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signup-email">Email Address</label>
+          <input type="email" id="signup-email" class="form-input" placeholder="name@example.com" required>
+        </div>
+
+        <div class="form-group" style="position: relative;">
+          <label class="form-label" for="signup-password">Create Password</label>
+          <input type="password" id="signup-password" class="form-input" placeholder="At least 6 characters" minlength="6" required style="padding-right: 40px;">
+          <button type="button" onclick="togglePasswordVisibility('signup-password', this)" style="position:absolute; right:12px; bottom:10px; border:none; background:transparent; color:var(--text-subtle); cursor:pointer;">
+            <i class="fa-regular fa-eye"></i>
+          </button>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 20px;">
+          <input type="checkbox" id="terms-agree" required style="accent-color: var(--primary); margin-top: 3px;">
+          <label for="terms-agree" style="font-size: 0.78rem; color: var(--text-muted);">
+            I agree to NOVA's <a href="#" style="color:var(--primary);">Terms of Service</a> and <a href="#" style="color:var(--primary);">Privacy Policy</a>.
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 12px;">
+          <i class="fa-solid fa-user-plus"></i> Create Account
+        </button>
+      </form>
+
+      <p style="text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-top: 22px;">
+        Protected by reCAPTCHA &amp; 256-Bit SSL Encryption.
+      </p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="javascript.js"></script>
+  <script>
+    const tabSignin = document.getElementById('tab-signin-btn');
+    const tabSignup = document.getElementById('tab-signup-btn');
+    const formSignin = document.getElementById('signin-form');
+    const formSignup = document.getElementById('signup-form');
+
+    tabSignin.addEventListener('click', () => {
+      tabSignin.classList.add('active');
+      tabSignup.classList.remove('active');
+      formSignin.style.display = 'block';
+      formSignup.style.display = 'none';
+    });
+
+    tabSignup.addEventListener('click', () => {
+      tabSignup.classList.add('active');
+      tabSignin.classList.remove('active');
+      formSignup.style.display = 'block';
+      formSignin.style.display = 'none';
+    });
+
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
+      } else {
+        input.type = 'password';
+        btn.innerHTML = '<i class="fa-regular fa-eye"></i>';
+      }
+    }
+
+    function handleAuthSubmit(e, mode) {
+      e.preventDefault();
+      const email = mode === 'signin' 
+        ? document.getElementById('auth-email').value 
+        : document.getElementById('signup-email').value;
+
+      const userName = mode === 'signup'
+        ? document.getElementById('signup-name').value
+        : email.split('@')[0];
+
+      localStorage.setItem('nova_user', JSON.stringify({ name: userName, email: email }));
+      showToast(`Welcome, ${userName}! Signed in successfully.`, 'success', 'fa-solid fa-user-check');
+
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 900);
+    }
+
+    function mockSocialLogin(provider) {
+      localStorage.setItem('nova_user', JSON.stringify({ name: `${provider} User`, email: `user@${provider.toLowerCase()}.com` }));
+      showToast(`Signed in with ${provider}!`, 'success', 'fa-solid fa-circle-check');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 800);
+    }
+  </script>
+</body>
+</html>

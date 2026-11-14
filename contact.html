@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVA — Customer Care & Help Center</title>
+  <link rel="icon" href="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=32&h=32&q=80">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <span class="badge">24/7 SUPPORT</span>
+    <span>Our customer care team is available around the clock via live chat and phone.</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+        <span>NOVA<span class="brand-dot">.</span></span>
+      </a>
+
+      <div class="delivery-pill" title="Click to update delivery address">
+        <i class="fa-solid fa-location-dot"></i>
+        <div class="text-col">
+          <span class="label">Deliver to</span>
+          <span class="address-val" id="header-address-text">Select location</span>
+        </div>
+      </div>
+
+      <div class="search-wrapper">
+        <div class="search-box">
+          <input type="text" class="search-input" id="header-search-input" placeholder="Search help topics or catalog..." autocomplete="off">
+          <button class="search-btn" id="header-search-btn" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+        <div class="search-suggestions-dropdown" id="search-suggestions-dropdown"></div>
+      </div>
+
+      <div class="header-actions">
+        <button class="action-btn" id="theme-toggle-btn" aria-label="Toggle dark/light mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <button class="action-btn" onclick="window.location.href='category.html?view=wishlist'" title="Your Wishlist" aria-label="Wishlist">
+          <i class="fa-regular fa-heart"></i>
+          <span class="action-badge wishlist-count-badge">0</span>
+        </button>
+
+        <div class="user-account-btn" onclick="window.location.href='orders.html'" title="My Orders">
+          <div class="user-avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+          <span>Orders</span>
+        </div>
+
+        <button class="cart-trigger-btn" onclick="openCartDrawer()" aria-label="View Cart">
+          <div class="cart-icon-circle"><i class="fa-solid fa-bag-shopping"></i></div>
+          <span class="cart-btn-label">Cart</span>
+          <span class="cart-count-badge" style="background:#fff; color:var(--primary); font-size:0.75rem; padding:2px 7px; border-radius:12px;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="category-nav-bar">
+    <div class="container">
+      <ul class="category-nav-list">
+        <li><a href="index.html" class="category-nav-link"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="category.html?category=all" class="category-nav-link"><i class="fa-solid fa-shapes"></i> Catalog</a></li>
+        <li><a href="category.html?category=mobiles" class="category-nav-link"><i class="fa-solid fa-mobile-screen"></i> Phones</a></li>
+        <li><a href="category.html?category=electronics" class="category-nav-link"><i class="fa-solid fa-laptop"></i> Tech</a></li>
+        <li><a href="orders.html" class="category-nav-link"><i class="fa-solid fa-box"></i> Orders</a></li>
+        <li><a href="contact.html" class="category-nav-link active"><i class="fa-solid fa-headset"></i> Support</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Support Hero -->
+  <section class="support-hero-banner container">
+    <span class="section-kicker"><i class="fa-solid fa-circle-question"></i> NOVA CARE &amp; SERVICE</span>
+    <h1 style="font-family: var(--font-heading); font-size: 2.6rem; font-weight: 800; margin: 10px 0 16px;">
+      How can we assist you today?
+    </h1>
+    <p style="color: var(--text-muted); font-size: 1rem; max-width: 580px; margin: 0 auto 30px;">
+      Find fast answers regarding shipping, warranty claims, returns, or talk directly with our certified product specialists.
+    </p>
+
+    <!-- 4 Quick Support Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; text-align: left;">
+      <div class="category-card-pill" onclick="window.location.href='orders.html'" style="padding: 24px;">
+        <div class="category-icon-box" style="background: #e0e7ff; color: #4f46e5;">
+          <i class="fa-solid fa-box-archive"></i>
+        </div>
+        <h3 class="category-title" style="font-size: 1.1rem;">Your Orders</h3>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Track packages, cancel items or print official invoices.</p>
+      </div>
+
+      <div class="category-card-pill" onclick="document.getElementById('faq-section').scrollIntoView({behavior:'smooth'})" style="padding: 24px;">
+        <div class="category-icon-box" style="background: #fce7f3; color: #db2777;">
+          <i class="fa-solid fa-rotate-left"></i>
+        </div>
+        <h3 class="category-title" style="font-size: 1.1rem;">Returns &amp; Refunds</h3>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Initiate a 30-day replacement or track refund status.</p>
+      </div>
+
+      <div class="category-card-pill" onclick="openLiveChatModal()" style="padding: 24px;">
+        <div class="category-icon-box" style="background: #d1fae5; color: #059669;">
+          <i class="fa-solid fa-comments"></i>
+        </div>
+        <h3 class="category-title" style="font-size: 1.1rem;">Live Specialist Chat</h3>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Average response time: less than 60 seconds.</p>
+      </div>
+
+      <div class="category-card-pill" onclick="document.getElementById('contact-form-section').scrollIntoView({behavior:'smooth'})" style="padding: 24px;">
+        <div class="category-icon-box" style="background: #fef3c7; color: #d97706;">
+          <i class="fa-solid fa-envelope-open-text"></i>
+        </div>
+        <h3 class="category-title" style="font-size: 1.1rem;">Submit Support Ticket</h3>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Direct message our priority technician desk.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section-wrapper container" id="faq-section" style="max-width: 880px;">
+    <div class="section-head" style="justify-content: center; text-align: center; margin-bottom: 30px;">
+      <div>
+        <span class="section-kicker">FREQUENTLY ASKED QUESTIONS</span>
+        <h2 class="section-title" style="justify-content: center;">Instant Answers</h2>
+      </div>
+    </div>
+
+    <!-- Accordion Items -->
+    <div class="faq-accordion-item active">
+      <div class="faq-accordion-header" onclick="toggleFaq(this)">
+        <span>How long does domestic shipping take?</span>
+        <i class="fa-solid fa-chevron-down faq-arrow"></i>
+      </div>
+      <div class="faq-accordion-body">
+        Express orders placed before 3:00 PM are dispatched on the same business day. Delivery across major metro cities takes 24–48 hours, while standard delivery to other regions takes 2–4 business days. All orders above ₹999 qualify for 100% Free Express Shipping.
+      </div>
+    </div>
+
+    <div class="faq-accordion-item">
+      <div class="faq-accordion-header" onclick="toggleFaq(this)">
+        <span>How do I apply coupon discount codes like NOVA20?</span>
+        <i class="fa-solid fa-chevron-down faq-arrow"></i>
+      </div>
+      <div class="faq-accordion-body">
+        Open your Shopping Bag drawer by clicking the "Cart" button in the top navigation. In the summary section, type <b>NOVA20</b> into the coupon input and click "Apply". An instant 20% deduction will reflect on your order subtotal.
+      </div>
+    </div>
+
+    <div class="faq-accordion-item">
+      <div class="faq-accordion-header" onclick="toggleFaq(this)">
+        <span>What is your 30-day money back guarantee?</span>
+        <i class="fa-solid fa-chevron-down faq-arrow"></i>
+      </div>
+      <div class="faq-accordion-body">
+        If you are not 100% satisfied with your purchase, you may initiate a return within 30 days of receiving your package. Items must remain in their original packaging with warranty seals intact. Refunds are processed back to your original payment method within 3 business days.
+      </div>
+    </div>
+
+    <div class="faq-accordion-item">
+      <div class="faq-accordion-header" onclick="toggleFaq(this)">
+        <span>Are all products authentic and covered under warranty?</span>
+        <i class="fa-solid fa-chevron-down faq-arrow"></i>
+      </div>
+      <div class="faq-accordion-body">
+        Every single product on NOVA is 100% brand authentic and sourced directly through authorized OEM distributors (Apple, Samsung, Sony, Nike, Dell, etc.). All electronics come with standard 1–2 year brand manufacturer warranties.
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section class="section-wrapper container" id="contact-form-section" style="max-width: 880px;">
+    <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-xl); padding: 40px; box-shadow: var(--shadow-md);">
+      <div style="margin-bottom: 24px;">
+        <span class="section-kicker">SEND AN INQUIRY</span>
+        <h2 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800;">Get in Touch With Us</h2>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 4px;">We usually respond within 2 to 4 hours during business days.</p>
+      </div>
+
+      <form onsubmit="handleContactSubmit(event)">
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Your Name *</label>
+            <input type="text" id="contact-name" class="form-input" placeholder="e.g. Maya Sharma" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" id="contact-email" class="form-input" placeholder="name@example.com" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Subject *</label>
+          <select id="contact-subject" class="form-input" style="cursor: pointer;">
+            <option value="order">Order Status or Delivery Inquiry</option>
+            <option value="return">Return or Refund Request</option>
+            <option value="product">Product Specification Question</option>
+            <option value="warranty">Warranty Claim</option>
+            <option value="other">General Feedback</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Message Details *</label>
+          <textarea id="contact-message" class="form-input" rows="5" placeholder="Please describe your query in detail..." required style="resize: vertical;"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="padding: 13px 28px;">
+          <i class="fa-solid fa-paper-plane"></i> Send Support Message
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Luxury Modern Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-main-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+            <span>NOVA<span class="brand-dot">.</span></span>
+          </a>
+          <p class="footer-desc">
+            Redefining digital retail with premium technology, authentic streetwear, and high performance everyday lifestyle essentials.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Customer Care</h4>
+          <ul>
+            <li><a href="orders.html">Track Order</a></li>
+            <li><a href="contact.html">Returns &amp; Replacement</a></li>
+            <li><a href="contact.html">Shipping Guidelines</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Security &amp; Trust</h4>
+          <ul>
+            <li>256-Bit SSL Encrypted</li>
+            <li>Direct Brand Warranties</li>
+            <li>Verified Deliveries</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom-row">
+        <div>&copy; 2026 NOVA Commerce. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Live Chat Simulation Modal -->
+  <div class="modal-overlay" id="chat-modal-overlay" onclick="if(event.target===this) closeLiveChatModal()">
+    <div class="checkout-modal-card" style="max-width: 460px; height: 560px; display: flex; flex-direction: column;">
+      <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 14px; margin-bottom: 14px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 38px; height: 38px; border-radius: var(--radius-full); background: var(--accent-emerald-subtle); color: var(--accent-emerald); display: grid; place-items: center; font-size: 1.1rem;">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div>
+            <strong style="font-size: 0.95rem;">NOVA AI Specialist</strong>
+            <small style="display: block; color: var(--accent-emerald); font-weight: 700; font-size: 0.72rem;">● Active Now</small>
+          </div>
+        </div>
+        <button class="modal-close-btn" style="position: static;" onclick="closeLiveChatModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Chat History -->
+      <div id="chat-messages-box" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 4px;">
+        <div style="background: var(--bg-subtle); padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; max-width: 85%;">
+          Hello! 👋 Welcome to NOVA Support. How may I assist you with your orders or product choices today?
+        </div>
+      </div>
+
+      <!-- Chat Input -->
+      <form onsubmit="handleChatMessage(event)" style="display: flex; gap: 8px; margin-top: 14px;">
+        <input type="text" id="chat-user-input" class="form-input" placeholder="Type a message..." required autocomplete="off">
+        <button type="submit" class="btn-primary" style="padding: 10px 16px;">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Slide-Over Cart Drawer -->
+  <div class="cart-drawer-overlay" id="cart-drawer-overlay" onclick="closeCartDrawer()"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-head">
+      <div class="cart-drawer-title-group">
+        <h3>Shopping Bag</h3>
+        <span class="cart-drawer-count" id="cart-drawer-count">0 items</span>
+      </div>
+      <button class="btn-close-drawer" onclick="closeCartDrawer()" aria-label="Close Cart"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-drawer-body" id="cart-drawer-body"></div>
+    <div class="cart-drawer-foot" id="cart-drawer-foot"></div>
+  </aside>
+
+  <!-- Quick View Modal -->
+  <div class="modal-overlay" id="quickview-modal-overlay" onclick="if(event.target===this) closeQuickView()">
+    <div class="quickview-card" id="quickview-modal-content"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="products.js"></script>
+  <script src="javascript.js"></script>
+  <script>
+    function toggleFaq(headerEl) {
+      const item = headerEl.parentElement;
+      item.classList.toggle('active');
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('contact-name').value;
+      showToast(`Thank you, ${name}! Your inquiry #TK-${Math.floor(1000 + Math.random() * 9000)} has been received.`, 'success', 'fa-solid fa-envelope-circle-check');
+      e.target.reset();
+    }
+
+    function openLiveChatModal() {
+      const overlay = document.getElementById('chat-modal-overlay');
+      if (overlay) overlay.classList.add('active');
+    }
+
+    function closeLiveChatModal() {
+      const overlay = document.getElementById('chat-modal-overlay');
+      if (overlay) overlay.classList.remove('active');
+    }
+
+    function handleChatMessage(e) {
+      e.preventDefault();
+      const input = document.getElementById('chat-user-input');
+      const box = document.getElementById('chat-messages-box');
+      const text = input.value.trim();
+      if (!text) return;
+
+      // User Message
+      const userBubble = document.createElement('div');
+      userBubble.style.cssText = 'background: var(--primary); color: #fff; padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; max-width: 85%; align-self: flex-end;';
+      userBubble.textContent = text;
+      box.appendChild(userBubble);
+      input.value = '';
+      box.scrollTop = box.scrollHeight;
+
+      // Simulated Bot Reply
+      setTimeout(() => {
+        const botBubble = document.createElement('div');
+        botBubble.style.cssText = 'background: var(--bg-subtle); padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; max-width: 85%;';
+        botBubble.innerHTML = 'Thanks for your message! Our system has verified your session. For immediate order tracking or invoice queries, you can also check your <a href="orders.html" style="color:var(--primary); font-weight:700;">Orders Dashboard</a>.';
+        box.appendChild(botBubble);
+        box.scrollTop = box.scrollHeight;
+      }, 700);
+    }
+  </script>
+</body>
+</html>

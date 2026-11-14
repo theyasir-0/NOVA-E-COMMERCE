@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVA — Your Orders & Purchase History</title>
+  <link rel="icon" href="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=32&h=32&q=80">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <span class="badge">ORDER TRACKING</span>
+    <span>Live real-time GPS tracking enabled for all express shipments.</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+        <span>NOVA<span class="brand-dot">.</span></span>
+      </a>
+
+      <div class="delivery-pill" title="Click to update delivery address">
+        <i class="fa-solid fa-location-dot"></i>
+        <div class="text-col">
+          <span class="label">Deliver to</span>
+          <span class="address-val" id="header-address-text">Select location</span>
+        </div>
+      </div>
+
+      <div class="search-wrapper">
+        <div class="search-box">
+          <input type="text" class="search-input" id="header-search-input" placeholder="Search orders, invoices, or catalog..." autocomplete="off">
+          <button class="search-btn" id="header-search-btn" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+        <div class="search-suggestions-dropdown" id="search-suggestions-dropdown"></div>
+      </div>
+
+      <div class="header-actions">
+        <button class="action-btn" id="theme-toggle-btn" aria-label="Toggle dark/light mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <button class="action-btn" onclick="window.location.href='category.html?view=wishlist'" title="Your Wishlist" aria-label="Wishlist">
+          <i class="fa-regular fa-heart"></i>
+          <span class="action-badge wishlist-count-badge">0</span>
+        </button>
+
+        <div class="user-account-btn" onclick="window.location.href='orders.html'" title="My Orders">
+          <div class="user-avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+          <span>Orders</span>
+        </div>
+
+        <button class="cart-trigger-btn" onclick="openCartDrawer()" aria-label="View Cart">
+          <div class="cart-icon-circle"><i class="fa-solid fa-bag-shopping"></i></div>
+          <span class="cart-btn-label">Cart</span>
+          <span class="cart-count-badge" style="background:#fff; color:var(--primary); font-size:0.75rem; padding:2px 7px; border-radius:12px;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="category-nav-bar">
+    <div class="container">
+      <ul class="category-nav-list">
+        <li><a href="index.html" class="category-nav-link"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="category.html?category=all" class="category-nav-link"><i class="fa-solid fa-shapes"></i> Catalog</a></li>
+        <li><a href="category.html?category=mobiles" class="category-nav-link"><i class="fa-solid fa-mobile-screen"></i> Smartphones</a></li>
+        <li><a href="category.html?category=electronics" class="category-nav-link"><i class="fa-solid fa-laptop"></i> Electronics</a></li>
+        <li><a href="category.html?category=fashion" class="category-nav-link"><i class="fa-solid fa-shirt"></i> Fashion</a></li>
+        <li><a href="orders.html" class="category-nav-link active"><i class="fa-solid fa-box"></i> Your Orders</a></li>
+        <li><a href="contact.html" class="category-nav-link"><i class="fa-solid fa-headset"></i> Support Hub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Orders Dashboard Page Content -->
+  <main class="container orders-page-wrapper">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:24px; flex-wrap:wrap; gap:12px;">
+      <div>
+        <h1 style="font-family:var(--font-heading); font-size:2rem; font-weight:800; margin-bottom:4px;">
+          Your Orders
+        </h1>
+        <p style="color:var(--text-muted); font-size:0.9rem;">
+          Track shipments, view detailed invoices, or re-order your favorite products.
+        </p>
+      </div>
+      <button class="btn-primary" onclick="window.location.href='index.html#catalog';">
+        <i class="fa-solid fa-bag-shopping"></i> Continue Shopping
+      </button>
+    </div>
+
+    <!-- Orders Filter Tabs -->
+    <div class="orders-tabs-nav">
+      <button class="orders-tab-btn active" data-tab="all">All Orders</button>
+      <button class="orders-tab-btn" data-tab="active">In Transit</button>
+      <button class="orders-tab-btn" data-tab="delivered">Delivered</button>
+      <button class="orders-tab-btn" data-tab="cancelled">Cancelled</button>
+    </div>
+
+    <!-- Orders Container (Loaded dynamically from localStorage or fallback defaults) -->
+    <div id="orders-list-container">
+      <!-- Populated via script -->
+    </div>
+  </main>
+
+  <!-- Luxury Modern Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-main-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+            <span>NOVA<span class="brand-dot">.</span></span>
+          </a>
+          <p class="footer-desc">
+            Redefining digital retail with premium technology, authentic streetwear, and high performance everyday lifestyle essentials.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Customer Care</h4>
+          <ul>
+            <li><a href="contact.html">Help Center</a></li>
+            <li><a href="contact.html">Returns & Replacement</a></li>
+            <li><a href="contact.html">Shipping Guidelines</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Security & Trust</h4>
+          <ul>
+            <li>256-Bit SSL Encrypted</li>
+            <li>Direct Brand Warranties</li>
+            <li>Verified Deliveries</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom-row">
+        <div>&copy; 2026 NOVA Commerce. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slide-Over Cart Drawer -->
+  <div class="cart-drawer-overlay" id="cart-drawer-overlay" onclick="closeCartDrawer()"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-head">
+      <div class="cart-drawer-title-group">
+        <h3>Shopping Bag</h3>
+        <span class="cart-drawer-count" id="cart-drawer-count">0 items</span>
+      </div>
+      <button class="btn-close-drawer" onclick="closeCartDrawer()" aria-label="Close Cart"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-drawer-body" id="cart-drawer-body"></div>
+    <div class="cart-drawer-foot" id="cart-drawer-foot"></div>
+  </aside>
+
+  <!-- Quick View Modal -->
+  <div class="modal-overlay" id="quickview-modal-overlay" onclick="if(event.target===this) closeQuickView()">
+    <div class="quickview-card" id="quickview-modal-content"></div>
+  </div>
+
+  <!-- Package Tracking Modal -->
+  <div class="modal-overlay" id="tracking-modal-overlay" onclick="if(event.target===this) closeTrackingModal()">
+    <div class="checkout-modal-card" style="max-width: 500px;">
+      <button class="modal-close-btn" onclick="closeTrackingModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h2 style="font-family:var(--font-heading); font-size:1.4rem; font-weight:800; margin-bottom:6px;">
+        Package Tracking
+      </h2>
+      <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:24px;" id="track-order-num">Tracking #NV-892144</p>
+
+      <div style="display:flex; flex-direction:column; gap:20px; position:relative; padding-left:20px; border-left:2px solid var(--primary);">
+        <div>
+          <strong style="color:var(--accent-emerald); font-size:0.95rem;">Delivered / On Schedule</strong>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Package handed directly to resident.</p>
+        </div>
+        <div>
+          <strong>Out for Delivery</strong>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Courier van en route to destination locality.</p>
+        </div>
+        <div>
+          <strong>Departed Logistics Hub</strong>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Sorted through Central Distribution Warehouse.</p>
+        </div>
+        <div>
+          <strong>Order Confirmed & Prepared</strong>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Seller packed and generated barcode invoice.</p>
+        </div>
+      </div>
+
+      <button class="btn-primary" style="width:100%; margin-top:28px; justify-content:center;" onclick="closeTrackingModal()">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="products.js"></script>
+  <script src="javascript.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('orders-list-container');
+      const storedOrders = JSON.parse(localStorage.getItem('nova_orders')) || [];
+
+      // Sample mock orders if none exist yet
+      const sampleOrders = [
+        {
+          id: 'NV-984210',
+          date: '10 May 2026',
+          status: 'Delivered',
+          total: 119999,
+          recipient: 'John Doe',
+          items: [
+            {
+              id: 1,
+              name: 'iPhone 15 Pro Max (Titanium Blue, 256GB)',
+              price: 119999,
+              img: 'https://images.unsplash.com/photo-1696446701796-da61225697cc?auto=format&fit=crop&q=80&w=400',
+              quantity: 1
+            }
+          ]
+        },
+        {
+          id: 'NV-771204',
+          date: '18 Apr 2026',
+          status: 'Delivered',
+          total: 4495,
+          recipient: 'John Doe',
+          items: [
+            {
+              id: 8,
+              name: 'Nike Air Max 270 Infrared Shoes',
+              price: 4495,
+              img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=400',
+              quantity: 1
+            }
+          ]
+        }
+      ];
+
+      const allDisplayOrders = storedOrders.length > 0 ? storedOrders : sampleOrders;
+
+      function renderOrders(filter = 'all') {
+        let filtered = allDisplayOrders;
+        if (filter === 'active') filtered = allDisplayOrders.filter(o => o.status === 'Confirmed' || o.status === 'In Transit');
+        else if (filter === 'delivered') filtered = allDisplayOrders.filter(o => o.status === 'Delivered');
+        else if (filter === 'cancelled') filtered = allDisplayOrders.filter(o => o.status === 'Cancelled');
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div style="text-align:center; padding:50px 20px; background:var(--bg-card); border-radius:var(--radius-lg); border:1px solid var(--border-color);">
+              <i class="fa-solid fa-box-open" style="font-size:3rem; color:var(--text-subtle); margin-bottom:14px;"></i>
+              <h3 style="font-family:var(--font-heading); font-size:1.2rem; margin-bottom:6px;">No orders found</h3>
+              <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:18px;">You don't have any orders matching this category.</p>
+              <button class="btn-primary" onclick="window.location.href='index.html#catalog';">Start Shopping</button>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = filtered.map(order => {
+          const statusClass = order.status === 'Delivered' 
+            ? 'status-delivered' 
+            : (order.status === 'Cancelled' ? 'status-cancelled' : 'status-transit');
+
+          return `
+            <div class="order-record-card">
+              <div class="order-record-head">
+                <div class="order-head-item">
+                  <p>ORDER PLACED</p>
+                  <p>${order.date}</p>
+                </div>
+                <div class="order-head-item">
+                  <p>TOTAL AMOUNT</p>
+                  <p>₹${order.total.toLocaleString()}</p>
+                </div>
+                <div class="order-head-item">
+                  <p>SHIP TO</p>
+                  <p>${order.address ? order.address.name : (order.recipient || 'Customer')}</p>
+                </div>
+                <div class="order-head-item" style="margin-left: auto;">
+                  <p>ORDER # ${order.id}</p>
+                  <a href="#" onclick="downloadMockInvoice('${order.id}'); return false;" style="color:var(--primary); font-weight:700;">View Invoice</a>
+                </div>
+              </div>
+
+              <div class="order-record-body">
+                <span class="order-status-badge ${statusClass}">
+                  <i class="fa-solid fa-circle-check"></i> ${order.status || 'Confirmed'}
+                </span>
+
+                <div class="order-item-list">
+                  ${order.items.map(item => `
+                    <div class="order-item-tile">
+                      <img src="${item.img}" alt="${item.name}">
+                      <div style="flex:1;">
+                        <h4 style="font-family:var(--font-heading); font-size:0.95rem; font-weight:700; margin-bottom:4px;">
+                          ${item.name}
+                        </h4>
+                        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">
+                          Qty: ${item.quantity || 1} • ₹${item.price.toLocaleString()}
+                        </p>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                          <button class="btn-secondary" style="padding:6px 12px; font-size:0.78rem; color:var(--text-main); border-color:var(--border-color);" onclick="addToCart(${item.id}, 1); openCartDrawer();">
+                            <i class="fa-solid fa-rotate-right"></i> Buy it again
+                          </button>
+                          <button class="btn-secondary" style="padding:6px 12px; font-size:0.78rem; color:var(--text-main); border-color:var(--border-color);" onclick="openTrackingModal('${order.id}')">
+                            <i class="fa-solid fa-location-crosshairs"></i> Track package
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Tab handlers
+      document.querySelectorAll('.orders-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.orders-tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderOrders(btn.dataset.tab);
+        });
+      });
+
+      renderOrders('all');
+    });
+
+    function openTrackingModal(orderId) {
+      const overlay = document.getElementById('tracking-modal-overlay');
+      const numEl = document.getElementById('track-order-num');
+      if (numEl) numEl.textContent = `Tracking #${orderId}`;
+      if (overlay) overlay.classList.add('active');
+    }
+
+    function closeTrackingModal() {
+      const overlay = document.getElementById('tracking-modal-overlay');
+      if (overlay) overlay.classList.remove('active');
+    }
+
+    function downloadMockInvoice(orderId) {
+      showToast(`Generating Invoice for Order #${orderId}...`, 'info', 'fa-solid fa-file-invoice');
+      setTimeout(() => {
+        window.print();
+      }, 700);
+    }
+  </script>
+</body>
+</html>
